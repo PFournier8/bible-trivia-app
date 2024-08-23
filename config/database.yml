@@ -1,0 +1,23 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: localhost  # Usually, localhost is correct, but it could be different depending on your setup
+
+development:
+  <<: *default
+  database: bible_trivia_app_development
+  username: preston  # Adjust as per the PostgreSQL user you created
+  password: <%= ENV['DATABASE_PASSWORD'] %>  # Using environment variable
+
+test:
+  <<: *default
+  database: bible_trivia_app_test
+  username: preston  # You can use the same user or create a separate one for testing
+  password: <%= ENV['DATABASE_PASSWORD'] %>  # Using environment variable
+
+production:
+  <<: *default
+  database: bible_trivia_app_production
+  username: bible_trivia_app  # This should match the production database user
+  password: <%= ENV["BIBLE_TRIVIA_APP_DATABASE_PASSWORD"] %>  # Already using environment variable

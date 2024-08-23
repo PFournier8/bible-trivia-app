@@ -1,0 +1,13 @@
+<h1>Categories#show</h1>
+
+<h1><%= @category.name %></h1>
+
+<%= link_to 'Edit', edit_category_path(@category) %>
+<%= link_to 'Back', categories_path %>
+
+<h2>Questions in this category:</h2>
+<ul>
+  <% @category.questions.each do |question| %>
+    <li><%= link_to question.content, question_path(question) %></li>
+  <% end %>
+</ul>
