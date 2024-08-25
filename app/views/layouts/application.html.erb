@@ -28,5 +28,19 @@
     <footer>
       <p>&copy; <%= Time.current.year %> Bible Trivia App</p>
     </footer>
+
+    <div id="signup-popup" class="popup">
+      <div class="popup-content">
+        <span class="close">&times;</span>
+        <h2>Create an Account</h2>
+        <form id="signup-form">
+          <input type="text" id="username" name="username" placeholder="Username" required>
+          <input type="email" id="email" name="email" placeholder="Email" required>
+          <input type="password" id="password" name="password" placeholder="Password" required>
+          <input type="password" id="password-confirmation" name="password_confirmation" placeholder="Confirm Password" required>
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
+    </div>
   </body>
 </html>
