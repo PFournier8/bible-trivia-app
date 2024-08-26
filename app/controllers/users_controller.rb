@@ -18,22 +18,23 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
   end
-
-  # POST /users or /users.json
-  def create
-    @user = User.new(user_params)
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to user_url(@user), notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
+  
+# POST /users or /users.json
+def create
+  puts "UsersController#create action called"
+  puts "Params: #{params.inspect}"
+  Rails.logger.debug "User params received: #{user_params.inspect}"
+  @user = User.new(user_params)
+  
+  if @user.save
+    Rails.logger.info "User created successfully: #{@user.inspect}"
+    session[:user_id] = @user.id
+    render json: { status: 'success', message: 'User created successfully' }, status: :created
+  else
+    Rails.logger.error "User creation failed: #{@user.errors.full_messages}"
+    render json: { status: 'error', errors: @user.errors.full_messages }, status: :unprocessable_entity
   end
-
+end
   # PATCH/PUT /users/1 or /users/1.json
   def update
     respond_to do |format|
@@ -50,6 +51,7 @@ class UsersController < ApplicationController
   # DELETE /users/1 or /users/1.json
   def destroy
     @user.destroy!
+    session[:user_id] = nil
 
     respond_to do |format|
       format.html { redirect_to users_url, notice: "User was successfully destroyed." }
@@ -65,6 +67,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username, :email, :password_digest)
+      params.require(:user).permit(:username, :email, :password, :password_confirmation)
     end
 end

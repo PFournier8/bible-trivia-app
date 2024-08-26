@@ -30,7 +30,7 @@
           <div class="cta-box">
             <h2>New to Bible Trivia?</h2>
             <p>Join our community and unlock all features!</p>
-            <a href="#" class="button primary-button signup-button">Create an Account</a>
+            <a href="#" class="button primary-button signup-button" data-action="click->signup-popup#open">Create an Account</a>
           </div>
           <div class="cta-box">
             <h2>Already a Member?</h2>
@@ -81,13 +81,14 @@
       <div class="popup-content">
         <span class="close">&times;</span>
         <h2>Create an Account</h2>
-        <form id="signup-form">
-          <input type="text" name="username" placeholder="Username" required>
-          <input type="email" name="email" placeholder="Email" required>
-          <input type="password" name="password" placeholder="Password" required>
-          <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
-          <button type="submit">Sign Up</button>
-        </form>
+        <div id="error-messages"></div>
+        <%= form_with(model: User.new, local: true, url: users_path) do |f| %>
+          <%= f.text_field :username, placeholder: "Username", required: true %>
+          <%= f.email_field :email, placeholder: "Email", required: true %>
+          <%= f.password_field :password, placeholder: "Password", required: true %>
+          <%= f.password_field :password_confirmation, placeholder: "Confirm Password", required: true %>
+          <%= f.submit "Sign Up" %>
+        <% end %>
       </div>
     </div>
 
