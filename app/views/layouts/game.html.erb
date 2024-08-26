@@ -4,14 +4,25 @@
     <title>Bible Trivia Game</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'game', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
   </head>
-
   <body>
-    <div class="game-wrapper">
+    <header>
+      <nav>
+        <%= link_to 'Home', root_path %>
+        <%= link_to 'Categories', categories_path %>
+        <%= link_to 'Questions', questions_path %>
+      </nav>
+    </header>
+    <main class="game-wrapper">
       <%= yield %>
-    </div>
+    </main>
+    <footer>
+      <p>2024 Bible Trivia | Made By Preston Fournier</p>
+    </footer>
   </body>
 </html>

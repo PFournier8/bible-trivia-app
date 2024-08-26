@@ -1,65 +1,192 @@
-.game-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.question-card {
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.answers {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.answer {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.answer:hover {
-  background-color: #e9ecef;
-}
-
-.submit-button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-top: 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.submit-button:hover {
-  background-color: #0056b3;
-}
-
-.flash-message {
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 4px;
-}
-
-.flash-message.notice {
-  background-color: #d4edda;
-  color: #155724;
-}
-
-.flash-message.alert {
-  background-color: #f8d7da;
-  color: #721c24;
-}
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .site-header {
+    background-color: #3498db;
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .site-title {
+    margin: 0;
+    font-size: 2rem;
+  }
+  
+  .site-header nav {
+    margin-top: 1rem;
+  }
+  
+  .site-header nav a {
+    color: white;
+    text-decoration: none;
+    margin-right: 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .site-header nav a:hover {
+    color: #f0f0f0;
+  }
+  
+  .game-wrapper {
+    min-height: calc(100vh - 140px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .game-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 2rem;
+    width: 100%;
+  }
+  
+  .question-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .question-text {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+    text-align: center;
+  }
+  
+  .answers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .answer {
+    position: relative;
+  }
+  
+  .answer-input {
+    position: absolute;
+    opacity: 0;
+  }
+  
+  .answer-label {
+    display: block;
+    background-color: #ecf0f1;
+    padding: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .answer-input:checked + .answer-label {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .submit-button {
+    display: block;
+    width: 100%;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #27ae60;
+  }
+  
+  .flash-message {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    text-align: center;
+  }
+  
+  .flash-message.notice {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .flash-message.alert {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .site-footer {
+    background-color: #34495e;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+  }
+  
+  /* Header styles for game page */
+  header {
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 60px;
+    display: flex;
+    align-items: center;
+  }
+  
+  nav {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  nav a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  nav a:hover {
+    background-color: var(--primary-color);
+    color: #ffffff;
+  }
+  
+  /* Adjust main content to account for fixed header */
+  .game-wrapper {
+    padding-top: 60px; /* Same as header height */
+  }
+  
+  /* Footer styles */
+  footer {
+    text-align: center;
+    padding: 1rem 0;
+    background-color: var(--primary-color);
+    color: #ffffff;
+  }
