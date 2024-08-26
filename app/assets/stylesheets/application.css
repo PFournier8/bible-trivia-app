@@ -14,9 +14,9 @@ html, body {
 }
 
 body {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   font-family: 'Poppins', sans-serif;
   line-height: 1.6;
   background-color: var(--background-color);
@@ -25,38 +25,80 @@ body {
   padding: 0;
 }
 
-header {
+.site-header {
   background-color: #ffffff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  height: 60px;
+  padding: 7px 0;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 50px;
+}
+
+.logo {
+  text-decoration: none;
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: 700;
+  color: #3498db;
+  letter-spacing: 1px;
+}
+
+.main-nav {
   display: flex;
   align-items: center;
 }
 
-nav {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-nav a {
-  color: var(--primary-color);
+.nav-link {
+  color: #333;
   text-decoration: none;
   font-weight: 500;
-  padding: 0.5rem 1rem;
-  margin: 0 0.5rem;
+  padding: 8px 16px;
+  margin: 0 4px;
   border-radius: 20px;
   transition: all 0.3s ease;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
 }
 
-nav a:hover {
-  background-color: var(--primary-color);
+.nav-link:hover {
+  background-color: #f0f0f0;
+  color: #3498db;
+}
+
+.play-button {
+  background-color: #3498db;
   color: #ffffff;
+}
+
+.play-button:hover {
+  background-color: #2980b9;
+  color: #ffffff;
+}
+
+body {
+  padding-top: 60px;
+}
+
+body.game {
+  padding-top: 0;
+}
+
+.game-background {
+  padding-top: 60px;
 }
 
 main {
@@ -77,7 +119,7 @@ main {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding-top: 1rem;
+  padding-top: 1rem; /* Reduced top padding */
 }
 
 h1 {
@@ -95,7 +137,7 @@ h1 {
   color: var(--accent-color);
   text-align: center;
   margin-top: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   font-weight: 300;
 }
 
@@ -183,8 +225,8 @@ h1 {
   max-width: 70%;
   box-sizing: border-box;
   margin-top: 1rem;
-  transform: none;
-  margin-bottom: 1rem;
+  margin-bottom: 1rem; /* Reduced bottom margin */
+  transform: none; /* Remove any transform that might be adding extra space */
 }
 
 features-container h3 {
@@ -240,7 +282,7 @@ footer {
   background-color: var(--primary-color);
   color: #ffffff;
   width: 100%;
-  margin-top: auto;
+  margin-top: auto; /* Push footer to the bottom */
   height: 60px;
   display: flex;
   align-items: center;
@@ -267,6 +309,26 @@ footer {
 @media (max-width: 480px) {
   .feature-grid {
     grid-template-columns: 1fr; 
+  }
+}
+
+@media (max-height: 800px) {
+  .cta-container {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .features-container {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-grid {
+    gap: 0.5rem;
+  }
+
+  .feature-card {
+    padding: 0.5rem;
   }
 }
 
@@ -372,5 +434,5 @@ footer p {
 /*
  *= require_tree .
  *= require_self
- *= require game
+ *= require home
  */

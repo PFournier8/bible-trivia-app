@@ -199,8 +199,8 @@ header nav a {
   margin: 0 0.5rem;
   border-radius: 20px;
   transition: all 0.3s ease;
-  font-family: 'Roboto', sans-serif; /* Ensure this matches your home page */
-  font-size: 16px; /* Adjust this to match your home page */
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
 }
 
 header nav a:hover {
@@ -208,7 +208,23 @@ header nav a:hover {
   color: #3498db;
 }
 
-/* Adjust the game background to account for the fixed header */
 .game-background {
-  padding-top: 60px; /* Adjust this value based on your header height */
+  padding-top: 60px;
+}
+
+header .logo-text,
+.site-header .logo-text,
+body.game header .logo-text,
+body.game .site-header .logo-text {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  color: #3498db !important;
+  letter-spacing: 1px !important;
+  line-height: 1 !important;
+}
+
+header nav {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
 }

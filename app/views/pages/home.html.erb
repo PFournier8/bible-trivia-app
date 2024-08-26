@@ -1,250 +1,91 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Bible Trivia</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<div class="home-container">
+  <h1>Welcome to Bible Trivia</h1>
+  <p class="tagline">Deepen your biblical knowledge through engaging trivia!</p>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <style>
-      .popup {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0,0,0,0.4);
-      }
-
-      .popup-content {
-        background-color: #fefefe;
-        margin: 10% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 90%;
-        max-width: 400px;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-
-      .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-
-      .close:hover,
-      .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-      }
-
-      .popup-content h2 {
-        margin-top: 0;
-        color: #333;
-      }
-
-      .popup-content form {
-        margin-top: 20px;
-      }
-
-      .popup-content form div {
-        margin-bottom: 15px;
-      }
-
-      .popup-content form label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-      }
-
-      .popup-content form input[type="text"],
-      .popup-content form input[type="email"],
-      .popup-content form input[type="password"] {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        box-sizing: border-box;
-      }
-
-      .popup-content form input[type="submit"] {
-        display: inline-block;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        text-align: center;
-        text-decoration: none;
-        outline: none;
-        color: #fff;
-        background-color: #4CAF50;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0 2px #999;
-        transition: background-color 0.3s ease;
-      }
-
-      .popup-content form input[type="submit"]:hover {
-        background-color: #45a049;
-      }
-
-      .popup-content form input[type="submit"]:active {
-        background-color: #3e8e41;
-        box-shadow: 0 1px #666;
-        transform: translateY(1px);
-      }
-    </style>
-  </head>
-
-  <body>
-    <header>
-      <nav>
-        <%= link_to 'Home', root_path %>
-        <%= link_to 'Categories', categories_path %>
-        <%= link_to 'Questions', questions_path %>
-      </nav>
-    </header>
-
-    <main>
-      <div class="home-container">
-        <h1>Welcome to Bible Trivia</h1>
-        <p class="tagline">Deepen your biblical knowledge through engaging trivia!</p>
-
-        <div class="cta-container">
-          <div class="cta-box">
-            <h2>New to Bible Trivia?</h2>
-            <p>Join our community and unlock all features!</p>
-            <a href="#" class="button primary-button signup-button">Create an Account</a>
-          </div>
-          <div class="cta-box">
-            <h2>Already a Member?</h2>
-            <p>Welcome back! Continue your biblical journey.</p>
-            <a href="#" class="button secondary-button login-button">Log In</a>
-          </div>
-          <div class="cta-box">
-            <h2>Just Want to Play?</h2>
-            <p>Start a quick game with random questions!</p>
-            <%= link_to 'Play Now', play_game_path, class: 'button accent-button' %>
-          </div>
-        </div>
-        <div class="features-container">
-          <h3>Create an account to:</h3>
-          <div class="feature-grid">
-            <div class="feature-card">
-              <i class="fas fa-pencil-alt"></i>
-              <h4>Create Questions</h4>
-              <p>Craft and share your own trivia questions</p>
-            </div>
-            <div class="feature-card">
-              <i class="fas fa-layer-group"></i>
-              <h4>Custom Trivia Packs</h4>
-              <p>Build packs for personal or group study</p>
-            </div>
-            <div class="feature-card">
-              <i class="fas fa-chart-line"></i>
-              <h4>Track Progress</h4>
-              <p>Monitor your Bible trivia statistics</p>
-            </div>
-            <div class="feature-card">
-              <i class="fas fa-book-open"></i>
-              <h4>Choose Version</h4>
-              <p>Select your preferred Bible version</p>
-            </div>
-            <div class="feature-card">
-              <i class="fas fa-users"></i>
-              <h4>Community Content</h4>
-              <p>Play trivia packs curated by others</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-    <div id="signup-popup" class="popup" style="display: none;">
-    <div class="popup-content">
-      <span class="close">&times;</span>
-      <h2>Create an Account</h2>
-      <%= form_with(model: User.new, local: true, url: users_path) do |f| %>
-        <div>
-          <%= f.label :username %>
-          <%= f.text_field :username, required: true %>
-        </div>
-        <div>
-          <%= f.label :email %>
-          <%= f.email_field :email, required: true %>
-        </div>
-        <div>
-          <%= f.label :password %>
-          <%= f.password_field :password, required: true %>
-        </div>
-        <div>
-          <%= f.label :password_confirmation %>
-          <%= f.password_field :password_confirmation, required: true %>
-        </div>
-        <%= f.submit "Sign Up" %>
-      <% end %>
+  <div class="cta-container">
+    <div class="cta-box">
+      <h2>New to Bible Trivia?</h2>
+      <p>Join our community and unlock all features!</p>
+      <a href="#" class="button primary-button signup-button">Create an Account</a>
+    </div>
+    <div class="cta-box">
+      <h2>Already a Member?</h2>
+      <p>Welcome back! Continue your biblical journey.</p>
+      <a href="#" class="button secondary-button login-button">Log In</a>
+    </div>
+    <div class="cta-box">
+      <h2>Just Want to Play?</h2>
+      <p>Start a quick game with random questions!</p>
+      <%= link_to 'Play Now', play_game_path, class: 'button accent-button' %>
     </div>
   </div>
-    <!-- Login Popup -->
-    <div id="login-popup" class="popup" style="display: none;">
-      <div class="popup-content">
-        <span class="close">&times;</span>
-        <h2>Log In</h2>
-        <form id="login-form">
-          <input type="email" name="email" placeholder="Email" required>
-          <input type="password" name="password" placeholder="Password" required>
-          <button type="submit">Log In</button>
-        </form>
+
+  <div class="features-container">
+    <h3>Create an account to:</h3>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <i class="fas fa-pencil-alt"></i>
+        <h4>Create Questions</h4>
+        <p>Craft and share your own trivia questions</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-layer-group"></i>
+        <h4>Custom Trivia Packs</h4>
+        <p>Build packs for personal or group study</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-chart-line"></i>
+        <h4>Track Progress</h4>
+        <p>Monitor your Bible trivia statistics</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-book-open"></i>
+        <h4>Choose Version</h4>
+        <p>Select your preferred Bible version</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-users"></i>
+        <h4>Community Content</h4>
+        <p>Play trivia packs curated by others</p>
       </div>
     </div>
+  </div>
+</div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', (event) => {
-        const signupButton = document.querySelector('.signup-button');
-        const loginButton = document.querySelector('.login-button');
-        const signupPopup = document.getElementById('signup-popup');
-        const loginPopup = document.getElementById('login-popup');
+<div id="signup-popup" class="popup" style="display: none;">
+  <div class="popup-content">
+    <span class="close">&times;</span>
+    <h2>Create an Account</h2>
+    <%= form_with(model: User.new, local: true, url: users_path) do |f| %>
+      <div>
+        <%= f.label :username %>
+        <%= f.text_field :username, required: true %>
+      </div>
+      <div>
+        <%= f.label :email %>
+        <%= f.email_field :email, required: true %>
+      </div>
+      <div>
+        <%= f.label :password %>
+        <%= f.password_field :password, required: true %>
+      </div>
+      <div>
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, required: true %>
+      </div>
+      <%= f.submit "Sign Up" %>
+    <% end %>
+  </div>
+</div>
 
-        function setupPopup(button, popup) {
-          const closeButton = popup.querySelector('.close');
-
-          button.addEventListener('click', (e) => {
-            e.preventDefault();
-            popup.style.display = 'block';
-          });
-
-          closeButton.addEventListener('click', () => {
-            popup.style.display = 'none';
-          });
-
-          window.addEventListener('click', (e) => {
-            if (e.target === popup) {
-              popup.style.display = 'none';
-            }
-          });
-
-          const form = popup.querySelector('form');
-          form.addEventListener('submit', (e) => {
-            console.log('Form submitted');
-            popup.style.display = 'none';
-          });
-        }
-
-        if (signupButton) setupPopup(signupButton, signupPopup);
-        if (loginButton) setupPopup(loginButton, loginPopup);
-      });
-    </script>
-    <footer>
-      <p>2024 Bible Trivia | Made By Preston Fournier</p>
-    </footer>
-  </body>
-</html>
+<div id="login-popup" class="popup" style="display: none;">
+  <div class="popup-content">
+    <span class="close">&times;</span>
+    <h2>Log In</h2>
+    <form id="login-form">
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Log In</button>
+    </form>
+  </div>
+</div>

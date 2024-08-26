@@ -2,6 +2,7 @@ class GamesController < ApplicationController
   layout 'game'
   
   def play
+    @body_class = 'game'
     @question = Question.includes(:answers).order("RANDOM()").first
     if @question.nil?
       flash[:alert] = "No questions available. Please add some questions to the database."

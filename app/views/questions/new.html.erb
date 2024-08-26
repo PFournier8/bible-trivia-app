@@ -1,17 +1,30 @@
-<h1>New Question</h1>
+<div class="question-background">
+  <div class="question-container">
+    <h1 class="question-title">Create a New Trivia Question</h1>
+    <%= form_with(model: @question, local: true, class: 'question-form') do |f| %>
+      <div class="form-group">
+        <%= f.label :content, "Question" %>
+        <%= f.text_area :content, class: 'form-control', placeholder: 'Enter your trivia question here' %>
+      </div>
 
-<%= form_with(model: @question, local: true) do |form| %>
-  <div>
-    <%= form.label :content %>
-    <%= form.text_area :content %>
+      <div class="form-group">
+        <%= f.label :category_id, "Category" %>
+        <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: "Select a category"}, {class: 'form-control'} %>
+      </div>
+
+      <h3>Answer Choices</h3>
+      <%= f.fields_for :answers do |answer_form| %>
+        <% 4.times do |i| %>
+          <div class="form-group answer-group">
+            <%= answer_form.label "answer_#{i+1}", "Answer #{i+1}" %>
+            <%= answer_form.text_field "content_#{i+1}", class: 'form-control', placeholder: "Enter answer choice #{i+1}" %>
+            <%= answer_form.radio_button :correct, i+1, class: 'correct-answer' %>
+            <%= answer_form.label "correct_#{i+1}", "Correct Answer", class: 'correct-answer-label' %>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%= f.submit "Create Question", class: 'submit-button' %>
+    <% end %>
   </div>
-
-  <div>
-    <%= form.label :category_id %>
-    <%= form.collection_select :category_id, Category.all, :id, :name, prompt: 'Select a category' %>
-  </div>
-
-  <%= form.submit %>
-<% end %>
-
-<%= link_to 'Back', questions_path %>
+</div>

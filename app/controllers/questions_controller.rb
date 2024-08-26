@@ -9,6 +9,7 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
+    4.times { @question.answers.build }
   end
 
   def create
@@ -23,6 +24,7 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:content, :category_id)
+    params.require(:question).permit(:content, :category_id, 
+      answers_attributes: [:content, :correct])
   end
 end
