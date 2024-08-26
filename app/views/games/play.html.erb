@@ -1,0 +1,19 @@
+<div class="game-container">
+  <%= render 'shared/flash_messages' %>
+  <h1>Bible Trivia</h1>
+  <div class="question-card">
+    <h2><%= @question.content %></h2>
+    <%= form_with url: answer_game_path, method: :post, local: true do |f| %>
+      <%= f.hidden_field :question_id, value: @question.id %>
+      <div class="answers">
+        <% @question.answers.shuffle.each do |answer| %>
+          <div class="answer">
+            <%= f.radio_button :answer_id, answer.id %>
+            <%= f.label "answer_id_#{answer.id}", answer.content %>
+          </div>
+        <% end %>
+      </div>
+      <%= f.submit "Submit Answer", class: "submit-button" %>
+    <% end %>
+  </div>
+</div>

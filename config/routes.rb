@@ -42,4 +42,7 @@ Rails.application.routes.draw do
   resources :questions
   # Remove this line as it's now at the top with a constraint
   # resources :users
+
+  get 'play', to: 'games#play', as: 'play_game'
+  post 'answer', to: 'games#answer', as: 'answer_game'
 end
