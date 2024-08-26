@@ -1,11 +1,12 @@
-import { Application } from "@hotwired/stimulus"
-import "@hotwired/turbo-rails"
-import "./controllers"
+// import { Application } from "@hotwired/stimulus"
+// import "@hotwired/turbo-rails"
+// import "./controllers"
+// import "./signup_popup"
 
-const application = Application.start()
+// const application = Application.start()
 
-// Configure Stimulus development experience
-application.debug = false
-window.Stimulus   = application
+// // Configure Stimulus development experience
+// application.debug = false
+// window.Stimulus   = application
 
-export { application }
+// export { application }

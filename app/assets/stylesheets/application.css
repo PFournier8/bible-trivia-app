@@ -16,7 +16,7 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh; /* Changed from 100% to 100vh */
   font-family: 'Poppins', sans-serif;
   line-height: 1.6;
   background-color: var(--background-color);
@@ -66,6 +66,7 @@ main {
   margin: 0 auto;
   padding: 70px 1rem 1rem;
   box-sizing: border-box;
+  overflow-y: auto; /* Add this line */
 }
 
 .home-container {
@@ -174,7 +175,7 @@ h1 {
   background-color: var(--light-gray);
   padding: 3rem;
   border-radius: 15px;
-  width: 110%;
+  width: 100%;
   max-width: 1320px;
   box-sizing: border-box;
   margin-top: 2rem;
@@ -183,7 +184,7 @@ h1 {
   transform: translateX(-5%);
 }
 
-.features-container h3 {
+features-container h3 {
   color: var(--primary-color);
   font-size: 2rem;
   margin-bottom: 2rem;
@@ -236,6 +237,7 @@ footer {
   background-color: var(--primary-color);
   color: #ffffff;
   width: 100%;
+  margin-top: auto; /* Add this line */
 }
 
 /* Responsive design */
@@ -277,13 +279,13 @@ footer {
 
 .popup-content {
   background-color: #fefefe;
-  margin: 15% auto;
+  margin: 10% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
+  width: 90%;
+  max-width: 400px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .close {
@@ -301,32 +303,57 @@ footer {
   cursor: pointer;
 }
 
-#signup-form, #login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.popup-content h2 {
+  margin-top: 0;
+  color: #333;
 }
 
-#signup-form input,
-#signup-form button,
-#login-form input,
-#login-form button {
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 4px;
+.popup-content form {
+  margin-top: 20px;
+}
+
+.popup-content form div {
+  margin-bottom: 15px;
+}
+
+.popup-content form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.popup-content form input[type="text"],
+.popup-content form input[type="email"],
+.popup-content form input[type="password"] {
+  width: 100%;
+  padding: 8px;
   border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-#signup-form button,
-#login-form button {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
+.popup-content form input[type="submit"] {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 2px #999;
   transition: background-color 0.3s ease;
 }
 
-#signup-form button:hover,
-#login-form button:hover {
+.popup-content form input[type="submit"]:hover {
   background-color: var(--secondary-color);
+}
+
+.popup-content form input[type="submit"]:active {
+  background-color: var(--accent-color);
+  box-shadow: 0 1px #666;
+  transform: translateY(1px);
 }

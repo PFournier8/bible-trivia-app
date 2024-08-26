@@ -1,103 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <title>Bible Trivia</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
   </head>
-
   <body>
-    <header class="app-header">
-      <nav class="main-nav">
-        <%= link_to root_path, class: "nav-link" do %>
-          <i class="fas fa-home"></i> Home
-        <% end %>
-        <%= link_to categories_path, class: "nav-link" do %>
-          <i class="fas fa-list"></i> Categories
-        <% end %>
-        <%= link_to questions_path, class: "nav-link" do %>
-          <i class="fas fa-question-circle"></i> Questions
-        <% end %>
-      </nav>
-    </header>
-
-    <main class="app-content">
-      <%= yield %>
-    </main>
-
-    <footer class="app-footer">
-      <p>&copy; <%= Time.current.year %> Bible Trivia App</p>
-    </footer>
-
-    <div id="signup-popup" class="popup" style="display: none;" data-controller="signup-popup">
-  <div class="popup-content">
-    <span class="close" data-action="click->signup-popup#close">&times;</span>
-    <h2>Create an Account</h2>
-    <form id="signup-form" data-action="submit->signup-popup#submit">
-      <input type="text" name="username" placeholder="Username" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <input type="password" name="password" placeholder="Password" required>
-      <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
-      <button type="submit">Sign Up</button>
-    </form>
-  </div>
-</div>
-
-    <div id="login-popup" class="popup" style="display: none;">
-      <div class="popup-content">
-        <span class="close">&times;</span>
-        <h2>Log In</h2>
-        <form id="login-form">
-          <input type="email" name="email" placeholder="Email" required>
-          <input type="password" name="password" placeholder="Password" required>
-          <button type="submit">Log In</button>
-        </form>
+    <% flash.each do |type, message| %>
+      <div class="flash <%= type %>">
+        <%= message %>
       </div>
-    </div>
+    <% end %>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', (event) => {
-        const signupButton = document.querySelector('.signup-button');
-        const loginButton = document.querySelector('.login-button');
-        const signupPopup = document.getElementById('signup-popup');
-        const loginPopup = document.getElementById('login-popup');
-
-        function setupPopup(button, popup) {
-          const closeButton = popup.querySelector('.close');
-
-          button.addEventListener('click', (e) => {
-            e.preventDefault();
-            popup.style.display = 'block';
-          });
-
-          closeButton.addEventListener('click', () => {
-            popup.style.display = 'none';
-          });
-
-          window.addEventListener('click', (e) => {
-            if (e.target === popup) {
-              popup.style.display = 'none';
-            }
-          });
-
-          const form = popup.querySelector('form');
-          form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            console.log('Form submitted');
-            popup.style.display = 'none';
-          });
-        }
-
-        if (signupButton) setupPopup(signupButton, signupPopup);
-        if (loginButton) setupPopup(loginButton, loginPopup);
-      });
-    </script>
+    <%= yield %>
   </body>
 </html>

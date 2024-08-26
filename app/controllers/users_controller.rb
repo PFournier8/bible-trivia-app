@@ -1,40 +1,24 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
-
-  # GET /users or /users.json
-  def index
-    @users = User.all
+  # POST /users or /users.json
+  def create
+    Rails.logger.info "UsersController#create called"
+    Rails.logger.info "Params: #{params.inspect}"
+    
+    @user = User.new(user_params)
+    
+    Rails.logger.info "User object created: #{@user.inspect}"
+    
+    if @user.save
+      Rails.logger.info "User saved successfully"
+      session[:user_id] = @user.id
+      redirect_to root_path, notice: "User created successfully! Welcome, #{@user.username}!"
+    else
+      Rails.logger.error "User save failed. Errors: #{@user.errors.full_messages}"
+      flash.now[:alert] = @user.errors.full_messages.join(", ")
+      render :new
+    end
   end
 
-  # GET /users/1 or /users/1.json
-  def show
-  end
-
-  # GET /users/new
-  def new
-    @user = User.new
-  end
-
-  # GET /users/1/edit
-  def edit
-  end
-  
-# POST /users or /users.json
-def create
-  puts "UsersController#create action called"
-  puts "Params: #{params.inspect}"
-  Rails.logger.debug "User params received: #{user_params.inspect}"
-  @user = User.new(user_params)
-  
-  if @user.save
-    Rails.logger.info "User created successfully: #{@user.inspect}"
-    session[:user_id] = @user.id
-    render json: { status: 'success', message: 'User created successfully' }, status: :created
-  else
-    Rails.logger.error "User creation failed: #{@user.errors.full_messages}"
-    render json: { status: 'error', errors: @user.errors.full_messages }, status: :unprocessable_entity
-  end
-end
   # PATCH/PUT /users/1 or /users/1.json
   def update
     respond_to do |format|

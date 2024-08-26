@@ -10,6 +10,100 @@
     <%= javascript_importmap_tags %>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+      .popup {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+      }
+
+      .popup-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 90%;
+        max-width: 400px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .popup-content h2 {
+        margin-top: 0;
+        color: #333;
+      }
+
+      .popup-content form {
+        margin-top: 20px;
+      }
+
+      .popup-content form div {
+        margin-bottom: 15px;
+      }
+
+      .popup-content form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      .popup-content form input[type="text"],
+      .popup-content form input[type="email"],
+      .popup-content form input[type="password"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      .popup-content form input[type="submit"] {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 2px #999;
+        transition: background-color 0.3s ease;
+      }
+
+      .popup-content form input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+
+      .popup-content form input[type="submit"]:active {
+        background-color: #3e8e41;
+        box-shadow: 0 1px #666;
+        transform: translateY(1px);
+      }
+    </style>
   </head>
 
   <body>
@@ -30,7 +124,7 @@
           <div class="cta-box">
             <h2>New to Bible Trivia?</h2>
             <p>Join our community and unlock all features!</p>
-            <a href="#" class="button primary-button signup-button" data-action="click->signup-popup#open">Create an Account</a>
+            <a href="#" class="button primary-button signup-button">Create an Account</a>
           </div>
           <div class="cta-box">
             <h2>Already a Member?</h2>
@@ -75,23 +169,31 @@
         </div>
       </div>
     </main>
-
-    <!-- Signup Popup -->
     <div id="signup-popup" class="popup" style="display: none;">
-      <div class="popup-content">
-        <span class="close">&times;</span>
-        <h2>Create an Account</h2>
-        <div id="error-messages"></div>
-        <%= form_with(model: User.new, local: true, url: users_path) do |f| %>
-          <%= f.text_field :username, placeholder: "Username", required: true %>
-          <%= f.email_field :email, placeholder: "Email", required: true %>
-          <%= f.password_field :password, placeholder: "Password", required: true %>
-          <%= f.password_field :password_confirmation, placeholder: "Confirm Password", required: true %>
-          <%= f.submit "Sign Up" %>
-        <% end %>
-      </div>
+    <div class="popup-content">
+      <span class="close">&times;</span>
+      <h2>Create an Account</h2>
+      <%= form_with(model: User.new, local: true, url: users_path) do |f| %>
+        <div>
+          <%= f.label :username %>
+          <%= f.text_field :username, required: true %>
+        </div>
+        <div>
+          <%= f.label :email %>
+          <%= f.email_field :email, required: true %>
+        </div>
+        <div>
+          <%= f.label :password %>
+          <%= f.password_field :password, required: true %>
+        </div>
+        <div>
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, required: true %>
+        </div>
+        <%= f.submit "Sign Up" %>
+      <% end %>
     </div>
-
+  </div>
     <!-- Login Popup -->
     <div id="login-popup" class="popup" style="display: none;">
       <div class="popup-content">
@@ -132,7 +234,6 @@
 
           const form = popup.querySelector('form');
           form.addEventListener('submit', (e) => {
-            e.preventDefault();
             console.log('Form submitted');
             popup.style.display = 'none';
           });
@@ -142,5 +243,8 @@
         if (loginButton) setupPopup(loginButton, loginPopup);
       });
     </script>
+    <footer>
+      <p>&copy; 2024 Bible Trivia. All rights reserved.</p>
+    </footer>
   </body>
 </html>

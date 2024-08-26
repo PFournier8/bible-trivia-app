@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  # Add this block at the top
+  root 'pages#home'
+  resources :users, only: [:create, :index]
+  # End of new block
+
   get "pages/home"
   resources :users
   get "categories/index"
@@ -19,6 +24,7 @@ Rails.application.routes.draw do
   get "questions/update"
   get "questions/destroy"
   post '/signup', to: 'users#create'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -29,10 +35,11 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  # Defines the root path route ("/")
-  root 'pages#home'
+  # Remove this line as it's now at the top
+  # root 'pages#home'
   
   resources :categories
   resources :questions
-  resources :users
+  # Remove this line as it's now at the top with a constraint
+  # resources :users
 end
