@@ -5,15 +5,29 @@ export default class extends Controller {
 
   connect() {
     console.log("SignupPopup controller connected")
+    console.log("Popup target:", this.popupTarget)
+    console.log("Has popup target:", this.hasPopupTarget)
   }
 
   open(event) {
     event.preventDefault()
-    this.popupTarget.style.display = 'block'
+    console.log("Open method called")
+    if (this.hasPopupTarget) {
+      this.popupTarget.style.display = 'block'
+      console.log("Popup displayed")
+    } else {
+      console.error("Popup target not found")
+    }
   }
 
   close() {
-    this.popupTarget.style.display = 'none'
+    console.log("Close method called")
+    if (this.hasPopupTarget) {
+      this.popupTarget.style.display = 'none'
+      console.log("Popup hidden")
+    } else {
+      console.error("Popup target not found")
+    }
   }
 
   submit(event) {

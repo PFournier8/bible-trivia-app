@@ -19,5 +19,6 @@ module BibleTriviaApp
     config.autoload_lib(ignore: %w[assets tasks])
 
     # Additional application configuration can be placed here
+    config.assets.enabled = true
   end
 end

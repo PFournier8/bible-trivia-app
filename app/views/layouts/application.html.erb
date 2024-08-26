@@ -29,18 +29,68 @@
       <p>&copy; <%= Time.current.year %> Bible Trivia App</p>
     </footer>
 
-    <div id="signup-popup" class="popup">
+    <div id="signup-popup" class="popup" style="display: none;">
       <div class="popup-content">
         <span class="close">&times;</span>
         <h2>Create an Account</h2>
         <form id="signup-form">
-          <input type="text" id="username" name="username" placeholder="Username" required>
-          <input type="email" id="email" name="email" placeholder="Email" required>
-          <input type="password" id="password" name="password" placeholder="Password" required>
-          <input type="password" id="password-confirmation" name="password_confirmation" placeholder="Confirm Password" required>
+          <input type="text" name="username" placeholder="Username" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <input type="password" name="password" placeholder="Password" required>
+          <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
           <button type="submit">Sign Up</button>
         </form>
       </div>
     </div>
+
+    <div id="login-popup" class="popup" style="display: none;">
+      <div class="popup-content">
+        <span class="close">&times;</span>
+        <h2>Log In</h2>
+        <form id="login-form">
+          <input type="email" name="email" placeholder="Email" required>
+          <input type="password" name="password" placeholder="Password" required>
+          <button type="submit">Log In</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (event) => {
+        const signupButton = document.querySelector('.signup-button');
+        const loginButton = document.querySelector('.login-button');
+        const signupPopup = document.getElementById('signup-popup');
+        const loginPopup = document.getElementById('login-popup');
+
+        function setupPopup(button, popup) {
+          const closeButton = popup.querySelector('.close');
+
+          button.addEventListener('click', (e) => {
+            e.preventDefault();
+            popup.style.display = 'block';
+          });
+
+          closeButton.addEventListener('click', () => {
+            popup.style.display = 'none';
+          });
+
+          window.addEventListener('click', (e) => {
+            if (e.target === popup) {
+              popup.style.display = 'none';
+            }
+          });
+
+          const form = popup.querySelector('form');
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            console.log('Form submitted');
+            popup.style.display = 'none';
+          });
+        }
+
+        if (signupButton) setupPopup(signupButton, signupPopup);
+        if (loginButton) setupPopup(loginButton, loginPopup);
+      });
+    </script>
   </body>
 </html>

@@ -30,12 +30,12 @@
           <div class="cta-box">
             <h2>New to Bible Trivia?</h2>
             <p>Join our community and unlock all features!</p>
-            <%= link_to 'Create an Account', '#', class: 'button primary-button' %>
+            <a href="#" class="button primary-button signup-button">Create an Account</a>
           </div>
           <div class="cta-box">
             <h2>Already a Member?</h2>
             <p>Welcome back! Continue your biblical journey.</p>
-            <%= link_to 'Log In', '#', class: 'button secondary-button' %>
+            <a href="#" class="button secondary-button login-button">Log In</a>
           </div>
           <div class="cta-box">
             <h2>Just Want to Play?</h2>
@@ -75,5 +75,71 @@
         </div>
       </div>
     </main>
+
+    <!-- Signup Popup -->
+    <div id="signup-popup" class="popup" style="display: none;">
+      <div class="popup-content">
+        <span class="close">&times;</span>
+        <h2>Create an Account</h2>
+        <form id="signup-form">
+          <input type="text" name="username" placeholder="Username" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <input type="password" name="password" placeholder="Password" required>
+          <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Login Popup -->
+    <div id="login-popup" class="popup" style="display: none;">
+      <div class="popup-content">
+        <span class="close">&times;</span>
+        <h2>Log In</h2>
+        <form id="login-form">
+          <input type="email" name="email" placeholder="Email" required>
+          <input type="password" name="password" placeholder="Password" required>
+          <button type="submit">Log In</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (event) => {
+        const signupButton = document.querySelector('.signup-button');
+        const loginButton = document.querySelector('.login-button');
+        const signupPopup = document.getElementById('signup-popup');
+        const loginPopup = document.getElementById('login-popup');
+
+        function setupPopup(button, popup) {
+          const closeButton = popup.querySelector('.close');
+
+          button.addEventListener('click', (e) => {
+            e.preventDefault();
+            popup.style.display = 'block';
+          });
+
+          closeButton.addEventListener('click', () => {
+            popup.style.display = 'none';
+          });
+
+          window.addEventListener('click', (e) => {
+            if (e.target === popup) {
+              popup.style.display = 'none';
+            }
+          });
+
+          const form = popup.querySelector('form');
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            console.log('Form submitted');
+            popup.style.display = 'none';
+          });
+        }
+
+        if (signupButton) setupPopup(signupButton, signupPopup);
+        if (loginButton) setupPopup(loginButton, loginPopup);
+      });
+    </script>
   </body>
 </html>
