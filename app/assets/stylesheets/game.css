@@ -141,6 +141,8 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
+  text-align: center;
+  text-decoration: none;
 }
 
 .submit-button:hover {
@@ -152,6 +154,10 @@ body {
 .submit-button:active {
   transform: translateY(0);
   box-shadow: none;
+}
+
+.submit-button.next-question {
+  margin-top: 1rem;
 }
 
 .flash-message {
@@ -227,4 +233,29 @@ header nav {
   display: flex;
   justify-content: center;
   padding: 1rem 0;
+}
+
+.answer.correct {
+  background-color: #d4edda;
+  border-color: #28a745;
+}
+
+.answer.selected:not(.correct) {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+}
+
+.result-message {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.result-message .correct {
+  color: #28a745;
+}
+
+.result-message .incorrect {
+  color: #dc3545;
 }

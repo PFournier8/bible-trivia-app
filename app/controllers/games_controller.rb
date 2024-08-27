@@ -11,16 +11,16 @@ class GamesController < ApplicationController
   end
   
   def answer
-    @question = Question.find(params[:question_id])
+    @question = Question.includes(:answers).find(params[:question_id])
     @selected_answer = @question.answers.find(params[:answer_id])
     @correct_answer = @question.answers.find_by(correct: true)
   
     if @selected_answer.correct
-      flash[:notice] = "Correct!"
+      flash.now[:notice] = "Correct!"
     else
-      flash[:alert] = "Incorrect. The correct answer was: #{@correct_answer.content}"
+      flash.now[:alert] = "Incorrect. The correct answer was: #{@correct_answer.content}"
     end
   
-    redirect_to play_game_path
+    render :play
   end
 end
