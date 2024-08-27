@@ -98,20 +98,24 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const signupButton = document.querySelector('.signup-button');
-    const loginButton = document.querySelector('.login-button');
+    const signupButtons = document.querySelectorAll('.signup-button');
+    const loginButtons = document.querySelectorAll('.login-button');
     const signupPopup = document.getElementById('signup-popup');
     const loginPopup = document.getElementById('login-popup');
     const closeButtons = document.querySelectorAll('.close');
 
-    signupButton.addEventListener('click', function(e) {
-      e.preventDefault();
-      signupPopup.style.display = 'block';
+    signupButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        signupPopup.style.display = 'block';
+      });
     });
 
-    loginButton.addEventListener('click', function(e) {
-      e.preventDefault();
-      loginPopup.style.display = 'block';
+    loginButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        loginPopup.style.display = 'block';
+      });
     });
 
     closeButtons.forEach(button => {

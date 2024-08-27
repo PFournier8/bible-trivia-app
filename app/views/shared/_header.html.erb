@@ -7,10 +7,20 @@
       <% unless current_page?(root_path) %>
         <%= link_to 'Home', root_path, class: 'nav-link' %>
       <% end %>
-      <%= link_to 'Categories', categories_path, class: 'nav-link' %>
+      <% unless current_page?(categories_path) %>
+        <%= link_to 'Categories', categories_path, class: 'nav-link' %>
+      <% end %>
       <%= link_to 'Questions', questions_path, class: 'nav-link' %>
       <% unless current_page?(play_game_path) %>
         <%= link_to 'Play', play_game_path, class: 'nav-link play-button' %>
+      <% end %>
+      <% if session[:user_id] %>
+        <div class="user-info">
+          <span class="username"><%= User.find_by(id: session[:user_id])&.username %></span>
+          <%= button_to 'Log out', logout_path, method: :delete, class: 'nav-link logout-button' %>
+        </div>
+      <% else %>
+        <%= link_to 'Login', login_path, class: 'nav-link login-button' %>
       <% end %>
     </nav>
   </div>
