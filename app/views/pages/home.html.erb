@@ -82,10 +82,50 @@
   <div class="popup-content">
     <span class="close">&times;</span>
     <h2>Log In</h2>
-    <form id="login-form">
-      <input type="email" name="email" placeholder="Email" required>
-      <input type="password" name="password" placeholder="Password" required>
-      <button type="submit">Log In</button>
-    </form>
+    <%= form_with(url: login_path, local: true) do |f| %>
+      <div>
+        <%= f.label :email %>
+        <%= f.email_field :email, required: true %>
+      </div>
+      <div>
+        <%= f.label :password %>
+        <%= f.password_field :password, required: true %>
+      </div>
+      <%= f.submit "Log In" %>
+    <% end %>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const signupButton = document.querySelector('.signup-button');
+    const loginButton = document.querySelector('.login-button');
+    const signupPopup = document.getElementById('signup-popup');
+    const loginPopup = document.getElementById('login-popup');
+    const closeButtons = document.querySelectorAll('.close');
+
+    signupButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      signupPopup.style.display = 'block';
+    });
+
+    loginButton.addEventListener('click', function(e) {
+      e.preventDefault();
+      loginPopup.style.display = 'block';
+    });
+
+    closeButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        signupPopup.style.display = 'none';
+        loginPopup.style.display = 'none';
+      });
+    });
+
+    window.addEventListener('click', function(e) {
+      if (e.target == signupPopup || e.target == loginPopup) {
+        signupPopup.style.display = 'none';
+        loginPopup.style.display = 'none';
+      }
+    });
+  });
+</script>

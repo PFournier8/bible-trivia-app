@@ -46,4 +46,7 @@ Rails.application.routes.draw do
 
   get 'play', to: 'games#play', as: 'play_game'
   post 'answer', to: 'games#answer', as: 'answer_game'
+  
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
 end
