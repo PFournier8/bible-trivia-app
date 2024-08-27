@@ -13,7 +13,7 @@ questions_data = [
   {
     category: bible_basics,
     content: "How many books are in the Bible?",
-    answers: [
+    answers_attributes: [
       { content: "66", correct: true },
       { content: "39", correct: false },
       { content: "27", correct: false },
@@ -23,7 +23,7 @@ questions_data = [
   {
     category: old_testament,
     content: "Who was the first man created according to the Bible?",
-    answers: [
+    answers_attributes: [
       { content: "Adam", correct: true },
       { content: "Noah", correct: false },
       { content: "Abraham", correct: false },
@@ -33,7 +33,7 @@ questions_data = [
   {
     category: new_testament,
     content: "Who wrote most of the books in the New Testament?",
-    answers: [
+    answers_attributes: [
       { content: "Paul", correct: true },
       { content: "Peter", correct: false },
       { content: "John", correct: false },
@@ -43,18 +43,10 @@ questions_data = [
 ]
 
 questions_data.each do |question_data|
-  question = Question.create!(
-    category: question_data[:category],
-    content: question_data[:content]
-  )
-  
-  question_data[:answers].each do |answer_data|
-    Answer.create!(
-      question: question,
-      content: answer_data[:content],
-      correct: answer_data[:correct]
-    )
-  end
+  Question.create!(question_data)
 end
 
 puts "Seed data created successfully!"
+puts "Created #{Category.count} categories"
+puts "Created #{Question.count} questions"
+puts "Created #{Answer.count} answers"
