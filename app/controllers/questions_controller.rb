@@ -1,6 +1,8 @@
 class QuestionsController < ApplicationController
   def index
-    @questions = Question.all
+    @body_class = 'questions-page'
+    @question = Question.new
+    4.times { @question.answers.build }
   end
 
   def show
@@ -15,9 +17,9 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
     if @question.save
-      redirect_to @question, notice: 'Question was successfully created.'
+      render json: { status: 'success', message: 'Question created successfully' }, status: :created
     else
-      render :new
+      render json: { status: 'error', errors: @question.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

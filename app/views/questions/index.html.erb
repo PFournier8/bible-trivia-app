@@ -1,9 +1,41 @@
-<h1>Questions</h1>
+<div class="game-background">
+  <div class="game-container">
+    <h1 class="game-title">Create a New Trivia Question</h1>
+    <div class="question-card">
+      <%= form_with(model: @question, local: false, id: 'new-question-form', class: 'answer-form') do |f| %>
+        <div class="form-group">
+          <%= f.label :content, "Question" %>
+          <%= f.text_area :content, class: 'form-control', placeholder: 'Enter your trivia question here' %>
+        </div>
 
-<%= link_to 'New Question', new_question_path %>
+        <div class="form-group">
+          <%= f.label :category_id, "Category" %>
+          <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: "Select a category"}, {class: 'form-control'} %>
+        </div>
 
-<ul>
-  <% @questions.each do |question| %>
-    <li><%= link_to question.content, question_path(question) %></li>
-  <% end %>
-</ul>
+        <div class="answers">
+          <% ['A', 'B', 'C', 'D'].each_with_index do |letter, index| %>
+            <%= f.fields_for :answers, @question.answers[index] do |answer_form| %>
+              <div class="answer">
+                <%= answer_form.radio_button :correct, true, class: 'answer-input' %>
+                <%= answer_form.label :correct, class: 'answer-label' do %>
+                  <span class="answer-letter"><%= letter %></span>
+                  <%= answer_form.text_field :content, class: 'answer-text', placeholder: "Answer #{letter}" %>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        <%= f.submit "Create Question", class: "submit-button" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div id="success-popup" class="popup" style="display: none;">
+  <div class="popup-content">
+    <h2>Success!</h2>
+    <p>Your question has been submitted successfully.</p>
+    <button onclick="closePopup()">Close</button>
+  </div>
+</div>
