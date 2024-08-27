@@ -20,7 +20,7 @@
 
         <div class="form-group">
           <%= f.label :category_id, "Category" %>
-          <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: "Select a category"}, {class: 'form-control', required: true} %>
+          <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: "Select a category"}, {class: 'form-control category-select', required: true} %>
         </div>
 
         <div class="answers">
@@ -112,4 +112,16 @@ function closeModal() {
   const modal = document.getElementById('custom-modal');
   modal.style.display = 'none';
 }
+
+$(document).ready(function() {
+  if (typeof $.fn.select2 === 'function') {
+    $('.category-select').select2({
+      placeholder: 'Select a category',
+      allowClear: true,
+      width: '100%'
+    });
+  } else {
+    console.error('Select2 is not available');
+  }
+});
 </script>

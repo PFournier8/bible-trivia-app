@@ -1,4 +1,5 @@
-document.addEventListener('turbo:load', function() {
+$(document).on('turbo:load', function() {
+    initializeSelect2();
     const form = document.getElementById('new-question-form');
     if (form) {
       form.addEventListener('submit', function(event) {
@@ -28,8 +29,18 @@ document.addEventListener('turbo:load', function() {
       });
     }
   });
-  
-  function showPopup() {
+
+function initializeSelect2() {
+  if ($('.category-select').length > 0) {
+    $('.category-select').select2({
+      placeholder: 'Select a category',
+      allowClear: true,
+      width: '100%'
+    });
+  }
+}
+
+function showPopup() {
     const popup = document.getElementById('success-popup');
     popup.style.display = 'block';
   }
