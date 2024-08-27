@@ -11,8 +11,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
   </head>
   <body class="<%= @body_class %>">
-    <%= render 'shared/header' %>
+    <header class="site-header">
+      <div class="header-container">
+        <%= link_to root_path, class: "logo" do %>
+          <span class="logo-text">Bible Trivia</span>
+        <% end %>
+        <nav class="main-nav">
+          <% if logged_in? %>
+            <%= link_to "Questions", questions_path, class: "nav-link" unless current_page?(questions_path) %>
+            <%= link_to "Categories", categories_path, class: "nav-link" unless current_page?(categories_path) %>
+            <%= link_to "Home", root_path, class: "nav-link" unless current_page?(root_path) %>
+            <div class="user-info">
+              <span class="username"><%= current_user.username %></span>
+              <%= button_to "Log out", logout_path, method: :delete, class: "nav-link" %>
+            </div>
+          <% else %>
+            <%= link_to "Log In", "#", class: "nav-link login-button" %>
+            <%= link_to "Sign Up", "#", class: "nav-link signup-button" %>
+          <% end %>
+        </nav>
+      </div>
+    </header>
     <%= yield %>
-    <%= render 'shared/footer' %>
   </body>
 </html>

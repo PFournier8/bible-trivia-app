@@ -1,3 +1,73 @@
+/* Add these styles at the top of your game.css file */
+.site-header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 7px 0;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 50px;
+}
+
+.logo {
+  text-decoration: none;
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: 700;
+  color: #3498db;
+  letter-spacing: 1px;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 16px;
+  margin: 0 4px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+
+.nav-link:hover {
+  background-color: #f0f0f0;
+  color: #3498db;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.username {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+/* Adjust the game-background to account for the fixed header */
+.game-background {
+  padding-top: 64px; /* Adjust this value based on your header height */
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #f0f4f8;
@@ -215,7 +285,7 @@ header nav a:hover {
 }
 
 .game-background {
-  padding-top: 60px;
+  padding-top: 64px; /* Adjust this value based on your header height */
 }
 
 header .logo-text,
