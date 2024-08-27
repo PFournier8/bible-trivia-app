@@ -1,6 +1,10 @@
 class CategoriesController < ApplicationController
+  layout 'categories'
+  before_action :set_debug_info
+
   def index
     @categories = Category.all
+    @category = Category.new
   end
 
   def show
@@ -14,9 +18,10 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
-      redirect_to @category, notice: 'Category was successfully created.'
+      redirect_to categories_path, notice: 'Category was successfully created.'
     else
-      render :new
+      @categories = Category.all
+      render :index
     end
   end
 
@@ -24,5 +29,9 @@ class CategoriesController < ApplicationController
 
   def category_params
     params.require(:category).permit(:name)
+  end
+
+  def set_debug_info
+    @debug_info = "This is from the controller"
   end
 end

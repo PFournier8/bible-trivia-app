@@ -12,3 +12,5 @@ Rails.application.config.assets.precompile += %w( application.js )
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 # Add this line
 Rails.application.config.assets.precompile += %w( questions.css )
+# Add this line to the end of the file
+Rails.application.config.assets.precompile += %w( categories.css )

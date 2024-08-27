@@ -1,9 +1,59 @@
-<h1>Categories</h1>
+<div class="categories-page">
+  <div class="categories-container">
+    <h1 class="categories-title">Categories</h1>
+    <div class="categories-content">
+      <div class="categories-list">
+        <h2>Existing Categories</h2>
+        <input type="text" id="categorySearch" placeholder="Search categories..." class="category-search">
+        <ul id="categoryList">
+          <% @categories.each do |category| %>
+            <li class="category-item"><%= category.name %></li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="new-category-form">
+        <h2>Create New Category</h2>
+        <%= form_with(model: @category, local: true, class: 'category-form') do |form| %>
+          <% if @category.errors.any? %>
+            <div class="error-messages">
+              <h3><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h3>
+              <ul>
+                <% @category.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <div class="field">
+            <%= form.label :name %>
+            <%= form.text_field :name, class: 'category-input' %>
+          </div>
+          <div class="actions">
+            <%= form.submit "Create Category", class: 'submit-button' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 
-<%= link_to 'New Category', new_category_path %>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('categorySearch');
+  const categoryList = document.getElementById('categoryList');
+  const categories = categoryList.getElementsByTagName('li');
 
-<ul>
-  <% @categories.each do |category| %>
-    <li><%= link_to category.name, category_path(category) %></li>
-  <% end %>
-</ul>
+  searchInput.addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+
+    Array.from(categories).forEach(function(category) {
+      const text = category.textContent.toLowerCase();
+      if (text.includes(searchTerm)) {
+        category.style.display = '';
+      } else {
+        category.style.display = 'none';
+      }
+    });
+  });
+});
+</script>
