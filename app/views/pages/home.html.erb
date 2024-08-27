@@ -127,5 +127,25 @@
         loginPopup.style.display = 'none';
       }
     });
+
+    const loginForm = document.querySelector('#login-popup form');
+    loginForm.addEventListener('ajax:success', function(event) {
+      const [data, status, xhr] = event.detail;
+      if (data.success) {
+        showNotification(data.message);
+        loginPopup.style.display = 'none';
+        // Redirect to the game page after a short delay
+        setTimeout(() => {
+          window.location.href = data.redirect_url;
+        }, 1500); // 1.5 seconds delay
+      } else {
+        showNotification(data.message);
+      }
+    });
+
+    loginForm.addEventListener('ajax:error', function(event) {
+      const [data, status, xhr] = event.detail;
+      showNotification(data.message);
+    });
   });
 </script>
