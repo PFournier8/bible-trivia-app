@@ -1,11 +1,34 @@
 <div class="game-background">
+  <div class="category-selector">
+    <h3>Select Categories</h3>
+    <input type="text" id="categorySearch" placeholder="Search categories..." class="category-search">
+    <%= form_with url: play_game_path, method: :get, local: true, class: 'category-form' do |f| %>
+      <div class="select-options">
+        <button type="button" id="selectAll" class="select-button">Select All</button>
+        <button type="button" id="unselectAll" class="select-button">Unselect All</button>
+      </div>
+      <div class="category-options" id="categoryList">
+        <% @categories.each do |category| %>
+          <label class="category-option">
+            <%= f.check_box "category_#{category.id}", 
+                            { checked: session[:selected_category_ids].include?(category.id) }, 
+                            'true', 'false' %>
+            <span><%= category.name %></span>
+          </label>
+        <% end %>
+      </div>
+      <%= f.hidden_field :apply_filters, value: 'true' %>
+      <%= f.submit "Apply Filters", class: "submit-button" %>
+    <% end %>
+  </div>
+
   <div class="game-container">
     <h1 class="game-title">Bible Trivia</h1>
     <div class="question-card">
       <h2 class="question-text"><%= @question.content %></h2>
       <% if @selected_answer %>
         <div class="answers">
-          <% @question.answers.shuffle.each_with_index do |answer, index| %>
+          <% @question.answers.shuffle(random: Random.new(@question.id)).each_with_index do |answer, index| %>
             <div class="answer <%= 'correct' if answer.correct %> <%= 'selected' if answer == @selected_answer %>">
               <span class="answer-letter"><%= ('A'..'D').to_a[index] %></span>
               <span class="answer-text"><%= answer.content %></span>
@@ -19,12 +42,17 @@
             <p class="incorrect">Incorrect.</p>
           <% end %>
         </div>
-        <%= button_to "Next Question", play_game_path, method: :get, class: "submit-button next-question" %>
+        <%= form_with url: play_game_path, method: :get, local: true do |f| %>
+          <% session[:selected_category_ids].each do |category_id| %>
+            <%= f.hidden_field "category_#{category_id}", value: 'true' %>
+          <% end %>
+          <%= f.submit "Next Question", class: "submit-button next-question" %>
+        <% end %>
       <% else %>
         <%= form_with url: answer_game_path, method: :post, local: true, class: 'answer-form' do |f| %>
           <%= f.hidden_field :question_id, value: @question.id %>
           <div class="answers">
-            <% @question.answers.shuffle.each_with_index do |answer, index| %>
+            <% @question.answers.shuffle(random: Random.new(@question.id)).each_with_index do |answer, index| %>
               <div class="answer">
                 <%= f.radio_button :answer_id, answer.id, class: 'answer-input' %>
                 <%= f.label "answer_id_#{answer.id}", class: 'answer-label' do %>
@@ -40,3 +68,42 @@
     </div>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('categorySearch');
+  const categoryList = document.getElementById('categoryList');
+  const categoryOptions = categoryList.getElementsByClassName('category-option');
+  const selectAllButton = document.getElementById('selectAll');
+  const unselectAllButton = document.getElementById('unselectAll');
+
+  searchInput.addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+
+    Array.from(categoryOptions).forEach(function(option) {
+      const categoryName = option.querySelector('span').textContent.toLowerCase();
+      if (categoryName.includes(searchTerm)) {
+        option.style.display = '';
+      } else {
+        option.style.display = 'none';
+      }
+    });
+  });
+
+  selectAllButton.addEventListener('click', function() {
+    Array.from(categoryOptions).forEach(function(option) {
+      if (option.style.display !== 'none') {
+        option.querySelector('input[type="checkbox"]').checked = true;
+      }
+    });
+  });
+
+  unselectAllButton.addEventListener('click', function() {
+    Array.from(categoryOptions).forEach(function(option) {
+      if (option.style.display !== 'none') {
+        option.querySelector('input[type="checkbox"]').checked = false;
+      }
+    });
+  });
+});
+</script>

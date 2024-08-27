@@ -329,3 +329,194 @@ header nav {
 .result-message .incorrect {
   color: #dc3545;
 }
+
+
+.game-background {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 64px);
+}
+
+.category-selector {
+  position: absolute;
+  left: 7%;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  padding: 2rem;
+  width: 250px;
+  max-height: 55%; 
+  display: flex;
+  flex-direction: column;
+}
+
+.category-selector h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.category-search {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  font-size: 0.9rem;
+}
+
+.category-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  overflow-y: auto;
+  max-height: 300px; /* Increased to allow more space for categories */
+}
+
+.category-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.category-option:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+.category-option input[type="checkbox"] {
+  display: none;
+}
+
+.category-option span {
+  padding-left: 30px;
+  position: relative;
+}
+
+.category-option span::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid #3498db;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.category-option input[type="checkbox"]:checked + span::before {
+  background-color: #3498db;
+}
+
+.category-option input[type="checkbox"]:checked + span::after {
+  content: '✓';
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 14px;
+}
+
+.category-form .submit-button {
+  width: 100%;
+}
+
+/* Scrollbar styles for webkit browsers */
+.category-options::-webkit-scrollbar {
+  width: 8px;
+}
+
+.category-options::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.category-options::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.category-options::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .game-background {
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+  }
+
+  .category-selector {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 2rem;
+  }
+
+  .game-container {
+    width: 100%;
+    max-width: 800px;
+  }
+}
+
+/* Add these styles for the Select All and Unselect All buttons */
+.select-options {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.select-button {
+  background-color: transparent;
+  color: #3498db;
+  border: 1px solid #3498db;
+  padding: 0.3rem 0.7rem;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  outline: none;
+}
+
+.select-button:hover {
+  background-color: #3498db;
+  color: white;
+}
+
+.select-button:active {
+  transform: translateY(1px);
+}
+
+/* Ensure buttons don't get too small on narrow screens */
+@media (max-width: 300px) {
+  .select-options {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .select-button {
+    width: 100%;
+  }
+}
+
+/* Adjust the category-options max-height to accommodate the new buttons */
+.category-options {
+  max-height: 280px; /* Adjusted to allow more space for categories */
+}
