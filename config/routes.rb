@@ -39,7 +39,8 @@ Rails.application.routes.draw do
   # root 'pages#home'
   
   resources :categories
-  resources :questions
+  resources :questions, only: [:index, :create]
+  get 'questions/new', to: 'questions#index', as: 'new_question'
   # Remove this line as it's now at the top with a constraint
   # resources :users
 

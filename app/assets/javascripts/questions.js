@@ -8,7 +8,8 @@ document.addEventListener('turbo:load', function() {
           method: form.method,
           body: new FormData(form),
           headers: {
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+            'Accept': 'application/json'
           }
         })
         .then(response => response.json())

@@ -1,26 +1,37 @@
 <div class="game-background">
   <div class="game-container">
     <h1 class="game-title">Create a New Trivia Question</h1>
+    <% if flash[:success] %>
+      <div class="flash-message success">
+        <%= flash[:success] %>
+      </div>
+    <% end %>
+    <% if flash[:error] %>
+      <div class="flash-message error">
+        <%= flash[:error] %>
+      </div>
+    <% end %>
     <div class="question-card">
-      <%= form_with(model: @question, local: false, id: 'new-question-form', class: 'answer-form') do |f| %>
+      <%= form_with(model: @question, local: true, class: 'answer-form', id: 'question-form') do |f| %>
         <div class="form-group">
           <%= f.label :content, "Question" %>
-          <%= f.text_area :content, class: 'form-control', placeholder: 'Enter your trivia question here' %>
+          <%= f.text_area :content, class: 'form-control', placeholder: 'Enter your trivia question here', required: true %>
         </div>
 
         <div class="form-group">
           <%= f.label :category_id, "Category" %>
-          <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: "Select a category"}, {class: 'form-control'} %>
+          <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: "Select a category"}, {class: 'form-control', required: true} %>
         </div>
 
         <div class="answers">
+          <p>Select the correct answer:</p>
           <% ['A', 'B', 'C', 'D'].each_with_index do |letter, index| %>
             <%= f.fields_for :answers, @question.answers[index] do |answer_form| %>
               <div class="answer">
-                <%= answer_form.radio_button :correct, true, class: 'answer-input' %>
-                <%= answer_form.label :correct, class: 'answer-label' do %>
+                <%= f.radio_button :correct_answer, index, class: 'answer-input' %>
+                <%= f.label "correct_answer_#{index}", class: 'answer-label' do %>
                   <span class="answer-letter"><%= letter %></span>
-                  <%= answer_form.text_field :content, class: 'answer-text', placeholder: "Answer #{letter}" %>
+                  <%= answer_form.text_field :content, class: 'answer-text', placeholder: "Answer #{letter}", required: true %>
                 <% end %>
               </div>
             <% end %>
@@ -32,10 +43,73 @@
   </div>
 </div>
 
-<div id="success-popup" class="popup" style="display: none;">
-  <div class="popup-content">
-    <h2>Success!</h2>
-    <p>Your question has been submitted successfully.</p>
-    <button onclick="closePopup()">Close</button>
+<!-- Add this custom modal HTML -->
+<div id="custom-modal" class="custom-modal">
+  <div class="modal-content">
+    <h2>Bible Trivia</h2>
+    <p id="modal-message"></p>
+    <button onclick="closeModal()">OK</button>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('question-form');
+  
+  // Clear form and show success message if there's a success flash
+  if (document.querySelector('.flash-message.success')) {
+    form.reset();
+    window.scrollTo(0, 0);
+  }
+
+  form.addEventListener('submit', function(event) {
+    const question = form.querySelector('textarea[name="question[content]"]').value.trim();
+    const category = form.querySelector('select[name="question[category_id]"]').value;
+    const answers = form.querySelectorAll('input[name^="question[answers_attributes]"][name$="[content]"]');
+    const correctAnswer = form.querySelector('input[name="question[correct_answer]"]:checked');
+
+    if (!question) {
+      showModal('Please enter a question.');
+      event.preventDefault();
+      return;
+    }
+
+    if (!category) {
+      showModal('Please select a category.');
+      event.preventDefault();
+      return;
+    }
+
+    let emptyAnswers = false;
+    answers.forEach(function(answer) {
+      if (!answer.value.trim()) {
+        emptyAnswers = true;
+      }
+    });
+
+    if (emptyAnswers) {
+      showModal('Please fill in all answer choices.');
+      event.preventDefault();
+      return;
+    }
+
+    if (!correctAnswer) {
+      showModal('Please select the correct answer choice.');
+      event.preventDefault();
+      return;
+    }
+  });
+});
+
+function showModal(message) {
+  const modal = document.getElementById('custom-modal');
+  const modalMessage = document.getElementById('modal-message');
+  modalMessage.textContent = message;
+  modal.style.display = 'flex';
+}
+
+function closeModal() {
+  const modal = document.getElementById('custom-modal');
+  modal.style.display = 'none';
+}
+</script>
